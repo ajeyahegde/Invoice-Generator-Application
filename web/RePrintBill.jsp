@@ -1,12 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*,databaseClient.SqlClient" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/Table.css">
 </head>
 <body>
 <%!	String paddress="",caddress="",cphone="" ;%>
@@ -52,7 +53,7 @@
 		while(rs.next())
 		{
 		bookno[i]=rs.getInt(8);
-		author[i]=rs.getString(2);
+		author[i]=rs.getNString(2);
 		quantity[i]=Integer.parseInt(request.getParameter(s1));
 		total[i]=prices[i]*quantity[i];
 		}
@@ -66,14 +67,14 @@
 	rs=sql.getPrakashanaDetails(pname);
 	while(rs.next())
 	{
-		paddress=rs.getString(3);
+		paddress=rs.getNString(3);
 	}
 	rs=sql.getCustomerDetails(cname);
 	while(rs.next())
 	{
-		cname=rs.getString(1);
-		caddress=rs.getString(2);
-		cphone=rs.getString(3);
+		cname=rs.getNString(1);
+		caddress=rs.getNString(2);
+		cphone=rs.getNString(3);
 	}	
 	}catch(Exception e)
 	{
@@ -81,10 +82,10 @@
 	}
 	%>
 <div align="center">
-<table style="border:1px solid black; text-align:left; width:100%">
+<table style="border:1px solid black; text-align:left; width:100%;table-layout:fixed;">
 <tr>
-	<td><%=pname%><br><%=paddress%> </td>
-	<td>Date: <%=date%><br>BillNo: <%=billno%><br><%=cname %><br><%=caddress%><br><%=cphone%></td>
+	<td style="width:50%"><%=pname%><br><%=paddress%> </td>
+	<td style="width:50%">Date: <%=date%><br>BillNo: <%=billno%><br><%=cname %><br><%=caddress%><br><%=cphone%></td>
 </tr>
 </table>
 </div>	
@@ -103,22 +104,27 @@
 	if(quantity[i]==0)
 		continue;
 %>
-<tr>
-	<td><%=no%></td>
-	<td><%=bookno[i]%>
-	<td><%=booksArray2[i] %></td>
-	<td><%=author[i] %>
-	<td><%=prices[i] %></td>
-	<td><%=quantity[i]%></td>
-	<td><%=total[i]%></td>
+<tr style="border:0px solid black;">
+	<td style="border-bottom-style:hidden;"><%=no%></td>
+	<td style="border-bottom-style:hidden;"><%=bookno[i]%>
+	<td style="border-bottom-style:hidden;"><%=booksArray2[i] %></td>
+	<td style="border-bottom-style:hidden;"><%=author[i] %>
+	<td style="border-bottom-style:hidden;"><%=prices[i] %></td>
+	<td style="border-bottom-style:hidden;"><%=quantity[i]%></td>
+	<td style="border-bottom-style:hidden;"><%=total[i]%></td>
 </tr>	
 <%
 no++;
 } %>
 </table>
-<%out.println("Grand Total:"+finaltotal);
-%>
-<button onclick="printscreen()" id="printbutton">Print Bill</button>
+<table style="width:100%;text-align:right;table-layout:fixed;"><tr>
+<td style="width:91%;">Grand Total:</td>
+<td>
+<%out.println(finaltotal);
+%></td>
+</tr>
+</table>
+<br><button onclick="printscreen()" id="printbutton">Print Bill</button>
 <script>
 function printscreen()
 {

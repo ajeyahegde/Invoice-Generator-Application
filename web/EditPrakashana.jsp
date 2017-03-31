@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
     <%@ page import="java.sql.*,databaseClient.SqlClient" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/formdesign1.css">
 </head>
 <body>
+<a style="margin-left:90%;margin-top:10%;" href="Homepage.html">HOME</a>
 <%
 	String id,prakashana;
 	id=request.getParameter("id");
@@ -18,15 +20,16 @@
 	String paddress="",owner="";
 	while(rs.next())
 	{
-		paddress=rs.getString(3);
-		owner=rs.getString(2);
+		paddress=rs.getNString(3);
+		owner=rs.getNString(2);
 	}
 %>
 <form action="EditDetails.jsp" method="get">
-Prakashana Details
-<br>Prakashana Name<input type="text" disabled="disabled" name="pname" value="<%=prakashana%>">
-<br>Enter Owner Name<input type="text" name="owner" value="<%=owner%>">
-<br>Enter Address<input type="text" name="paddress" value="<%=paddress%>">
+ಪ್ರಕಾಶನ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ
+<br>ಪ್ರಕಾಶನ ಹೆಸರು:<input type="text" disabled="disabled" name="pname" value="<%=prakashana%>">
+<br>ಪ್ರಕಾಶನ ಮಾಲೀಕರ ಹೆಸರು:<input type="text" name="owner" value="<%=owner%>">
+<br>ಪ್ರಕಾಶನ ವಿಳಾಸ:<input type="text" name="paddress" value="<%=paddress%>">
+
 <input type="hidden" name="id" value="<%=id%>">
 <input type="hidden" name="prakashana" value="<%=prakashana%>">
 <br><input type="submit" value="Update Prakashana details">

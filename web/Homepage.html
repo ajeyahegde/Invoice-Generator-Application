@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="formdesign1.css">
+<style>
+.dropbtn {
+ 	margin-top:30%;
+    padding: 12px 20px;
+    background-color: #FF0000;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #008800;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+</style>
+</head>
+<body>
+<div class="dropdown">
+  <button class="dropbtn">Author Details</button>
+  <div class="dropdown-content">
+    <a href="enterauthordetails.html">Enter Author Details</a>
+    <a href="ViewAuthorList">View Author Details</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button class="dropbtn">Books Details</button>
+  <div class="dropdown-content">
+    <a href="getbookdetails.jsp">Enter Book Details</a>
+    <a href="ViewBookList">View Book Details</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button class="dropbtn">Customer Details</button>
+  <div class="dropdown-content">
+    <a href="entercustomerdetails.html">Enter Customer Details</a>
+    <a href="ViewCustomerList">View Customer Details</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button class="dropbtn">Prakashana Details</button>
+  <div class="dropdown-content">
+    <a href="enterprakashanadetails.html">Enter Prakashana Details</a>
+    <a href="ViewPrakashanaList">View Prakashana Details</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button class="dropbtn">Bill Details</button>
+  <div class="dropdown-content">
+    <a href="EnterBillDetails.jsp">New Bill</a>
+    <a href="ViewBills.jsp">Reprint Bill</a>
+  </div>
+</div>
+
+<div class="dropdown">
+  <button class="dropbtn">Edit Details</button>
+  <div class="dropdown-content">
+    <a href="RemoveEditAuthors.jsp">Edit or Remove Author Details</a>
+	<a href="RemoveEditBooks.jsp">Edit or Remove Books Details</a>
+	<a href="RemoveEditCustomers.jsp">Edit or Remove Customers Details</a>
+	<a href="RemoveEditPrakashana.jsp">Edit or Remove Prakashana Details</a>
+  </div>
+</div>
+
+
+</body>
+</html>

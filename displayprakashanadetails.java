@@ -2,9 +2,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import bills2.DatabaseAccess;
-
 import java.sql.*;
 
 import javax.servlet.ServletException;
@@ -13,17 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import databaseClient.SqlClient;
+
 /**
  * Servlet implementation class displayprakashanadetails
  */
-@WebServlet("/displayprakashanadetails")
-public class displayprakashanadetails extends HttpServlet {
+@WebServlet("/DisplayPrakashanaDetails")
+public class DisplayPrakashanaDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public displayprakashanadetails() {
+    public DisplayPrakashanaDetails() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,24 +32,32 @@ public class displayprakashanadetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		DatabaseAccess d=new DatabaseAccess();
-		String pname=request.getParameter("param");
-		out.println("<br>Prakashana Details are as follows");
-		ResultSet rs=d.getPrakashanaDetails(pname);
-		String paddress,owner;
+		SqlClient sql=new SqlClient();
+		String prakashananame=request.getParameter("param");
+		out.print("<html><head><link rel='stylesheet' type='text/css' href='"+request.getContextPath()+"/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
+		out.println("<br><h1>"+prakashananame+"</h1>");
+		ResultSet rs=sql.getPrakashanaDetails(prakashananame);
+		String prakashanaaddress,owner;
 		try{
 		while(rs.next())
 		{
-			owner=rs.getString(2);
-			paddress=rs.getString(3);
-			out.println("<br>Prakashana Name: "+pname);
-			out.println("<br>Prakashana Address: "+paddress);
-			out.println("<br>Prakashana Owner: "+owner);
+			owner=rs.getNString(2);
+			prakashanaaddress=rs.getNString(3);
+			out.println("<br>ಪ್ರಕಾಶನ ಹೆಸರು: "+prakashananame);
+			out.println("<br>ಪ್ರಕಾಶನ ವಿಳಾಸ: "+prakashanaaddress);
+			out.println("<br>ಪ್ರಕಾಶನ ಮಾಲೀಕರು: "+owner);
 			
 		}
+		out.println("</html>");
 		}
-		catch(Exception e){}
+		catch(Exception e){
+			System.out.println("Exception called in DisplayPrakashanaDetails.java:"+e.getMessage());
+		}
 	}
 
 	/**

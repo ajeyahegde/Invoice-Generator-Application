@@ -31,10 +31,15 @@ public class EnterBookDetail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		SqlClient d=new SqlClient();
+		SqlClient sql=new SqlClient();
 		String bookname,author,prakashananame;
-		int year,pages,price,quantity,bno;
+		out.println("<html><head><link rel='stylesheet' type='text/css' href='"+request.getContextPath()+"/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
+		int year,pages,price,quantity,bookno;
 		bookname=request.getParameter("bname");
 		author=request.getParameter("author");
 		prakashananame=request.getParameter("pname");
@@ -42,18 +47,17 @@ public class EnterBookDetail extends HttpServlet {
 		pages=Integer.parseInt(request.getParameter("pages"));
 		quantity=Integer.parseInt(request.getParameter("quantity"));
 		year=Integer.parseInt(request.getParameter("year"));
-		bno=Integer.parseInt(request.getParameter("bno"));
-		d.setBookDetails(bookname, author, price, quantity, pages, year, prakashananame,bno);
-		out.println("<br>You inserted Book detials as follows");
-		out.println("<br>Book Name: "+bookname);
-		out.println("<br>Book Price"+price);
-		out.println("<br>Author Name"+author);
-		out.println("<br>Quantity"+quantity);
-		out.println("<br>Year of Release"+year);
-		out.println("<br>Number of pages in Book"+pages);
-		out.println("<br>Published under prakashana"+prakashananame);
-		out.println("<br>Book Number is"+bno);
-		
+		bookno=Integer.parseInt(request.getParameter("bno"));
+		sql.setBookDetails(bookname, author, price, quantity, pages, year, prakashananame,bookno);
+		out.println("<br>ಪುಸ್ತಕದ ಹೆಸರ: "+bookname);
+		out.println("<br>ಪುಸ್ತಕದ ಬೆಲೆ: "+price);
+		out.println("<br>ಪುಸ್ತಕದ ಲೇಖಕರ ಹೆಸರು: "+author);
+		out.println("<br>ಪುಸ್ತಕ ಪ್ರಮಾಣ: "+quantity);
+		out.println("<br>ಪುಸ್ತಕದ ಬಿಡುಗಡೆಯಾದ ವರ್ಷ: "+year);
+		out.println("<br>ಪುಸ್ತಕದ ಪುಟಗಳ ಸಂಖ್ಯೆ: "+pages);
+		out.println("<br>ಪುಸ್ತಕದ ಪ್ರಕಾಶನ : "+prakashananame);
+		out.println("<br>ಪುಸ್ತಕ ಆಯ್ಕೆ ಸಂಖ್ಯೆ: "+bookno);
+		out.println("</html");
 	}
 
 	/**

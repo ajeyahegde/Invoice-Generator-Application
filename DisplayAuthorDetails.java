@@ -2,6 +2,8 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.*;    //TODO:Remove * and use specific imports.
 
 import javax.servlet.ServletException;
@@ -31,31 +33,35 @@ public class DisplayAuthorDetails extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
 		String authorname,link,authorName,authoraddress,authorphone,authormobile,authorpan;//TODO:change names using refactor rename
+		out.print("<html><head><link rel='stylesheet' type='text/css' href='/bills2/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
 		authorname=request.getParameter("param");
-		out.println(authorname);
-		SqlClient d=new SqlClient();
+		SqlClient sql=new SqlClient();
 		try{
-			ResultSet rs=d.getAuthorDetails(authorname);
+			ResultSet rs=sql.getAuthorDetails(authorname);
 			while(rs.next())
 			{
-				authorName=rs.getString(1);
-				authoraddress=rs.getString(2);
-				authorphone=rs.getString(3);
-				authorpan=rs.getString(4);
-				authormobile=rs.getString(5);
-				out.println("<br>Author detials are as follows");
-				out.println("<br>Author name: "+authorName);
-				out.println("<br>Author address: "+authoraddress);
-				out.println("<br>Author phone: "+authorphone);
-				out.println("<br>Author mobile: "+authormobile);
-				out.println("<br>Author pancard no: "+authorpan);
-				out.println("To view Author books:");
+				authorName=rs.getNString(1);
+				authoraddress=rs.getNString(2);
+				authorphone=rs.getNString(3);
+				authorpan=rs.getNString(4);
+				authormobile=rs.getNString(5);
+				out.println("<br><h1>"+authorname+"</h1>");
+				out.println("<br>ಲೇಖಕರ ಹೆಸರು: "+authorname);
+				out.println("<br>ಲೇಖಕರ ವಿಳಾಸ : "+authoraddress);
+				out.println("<br>ಲೇಖಕರ ಫೋನ್ ನಂಬರ್ : "+authorphone);
+				out.println("<br>ಲೇಖಕರ ಮೊಬೈಲ್  ನಂಬರ್ : "+authormobile);
+				out.println("<br>ಲೇಖಕರ ಪಾನ್ ಕಾರ್ಡ್  ನಂಬರ್ : "+authorpan);
+				out.println("<br>ಲೇಖಕರ ಪುಸ್ತಕಗಳು ವೀಕ್ಷಿಸಲು:");
 			}
 			link="DisplayAuthorBooks?param="+authorname;
-			out.println("<a href='"+ link +"'> View Authors Books</a>");
-			
+			out.println("<br><a href='"+ link +"'> View Authors Books</a>");
+			out.println("</html>");
 		}
 		catch(Exception e)
 		{

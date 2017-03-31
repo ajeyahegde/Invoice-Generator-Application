@@ -1,17 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*,databaseClient.SqlClient" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/Table.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Insert title here</title>
 </head>
 <body>
 <%!	String paddress="",caddress="",cphone="" ;%>
 <%
-	
+	request.setCharacterEncoding("UTF-8");
+	response.setCharacterEncoding("UTF-8");
 	int count=Integer.parseInt(request.getParameter("count"));
 	int i;
 	String s1,s2;
@@ -49,32 +51,35 @@
 	for(i=0;i<count;i++)
 	{
 		s1=booksArray2[i];
-		try{
+		try{	
 		rs=sql.getBookDetails(s1);
+		System.out.println(s1);
 		while(rs.next())
 		{
 		bookno[i]=rs.getInt(8);
-		author[i]=rs.getString(2);
-		quantity[i]=Integer.parseInt(request.getParameter(s1));
+		author[i]=rs.getNString(2);
+		System.out.println("Check");
+		quantity[i]=Integer.parseInt(request.getParameter(i+""));
 		total[i]=prices[i]*quantity[i];
+	
 		}
 		}
 		catch(Exception e)
 		{
-			System.out.println("Exception called");
+			System.out.println("Exception called in Findtotal.jsp"+e.getMessage());
 		}
 	}
 	try{
 	rs=sql.getPrakashanaDetails(pname);
 	while(rs.next())
 	{
-		paddress=rs.getString(3);
+		paddress=rs.getNString(3);
 	}
 	rs=sql.getCustomerDetails(cname);
 	while(rs.next())
 	{
-		cname=rs.getString(1);
-		caddress=rs.getString(2);
+		cname=rs.getNString(1);
+		caddress=rs.getNString(2);
 		cphone=rs.getString(3);
 	}	
 	}catch(Exception e)
@@ -106,21 +111,28 @@
 		continue;
 %>
 <tr>
-	<td><%=no%></td>
-	<td><%=bookno[i]%>
-	<td><%=booksArray2[i] %></td>
-	<td><%=author[i] %>
-	<td><%=prices[i] %></td>
-	<td><%=quantity[i]%></td>
-	<td><%=total[i]%></td>
+	<td style="border-bottom-style:hidden;"><%=no%></td>
+	<td style="border-bottom-style:hidden;"><%=bookno[i]%>
+	<td style="border-bottom-style:hidden;"><%=booksArray2[i] %></td>
+	<td style="border-bottom-style:hidden;"><%=author[i] %>
+	<td style="border-bottom-style:hidden;"><%=prices[i] %></td>
+	<td style="border-bottom-style:hidden;"><%=quantity[i]%></td>
+	<td style="border-bottom-style:hidden;"><%=total[i]%></td>
 </tr>	
 <%
 no++;
 } %>
 </table>
-<%out.println("Grand Total:"+finaltotal);
+<table style="table-layout:fixed;width:100%;">
+<tr>
+<td style="width:92%;text-align:right;">Grand Total:</td>
+<td>
+<%out.println(finaltotal);
 %>
-<button onclick="printscreen()">Print Bill</button>
+</td>
+</tr>
+</table>
+<br><button onclick="printscreen()">Print Bill</button>
 <%rs=sql.getBillDetailsTable();
 int j=0,check,check1=0;
 while(rs.next())

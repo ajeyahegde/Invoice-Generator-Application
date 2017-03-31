@@ -1,5 +1,6 @@
 
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -12,17 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import databaseClient.SqlClient;
 
+
 /**
- * Servlet implementation class displayprakashanadetails
+ * Servlet implementation class viewprakashana
  */
-@WebServlet("/DisplayPrakashanaDetails")
-public class DisplayPrakashanaDetails extends HttpServlet {
+@WebServlet("/ViewPrakashanaDetails")
+public class ViewPrakashanaList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayPrakashanaDetails() {
+    public ViewPrakashanaList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +34,28 @@ public class DisplayPrakashanaDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		SqlClient d=new SqlClient();
-		String prakashananame=request.getParameter("param");
-		out.println("<br>Prakashana Details are as follows");
-		ResultSet rs=d.getPrakashanaDetails(prakashananame);
-		String prakashanaaddress,owner;
+		SqlClient sql=new SqlClient();
+		ResultSet rs=sql.getPrakashanaTable();
+		String prakashananame,link;
+		out.print("<html><head><link rel='stylesheet' type='text/css' href='/bills2/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
+		out.println("<h1>ಪ್ರಕಾಶನ</h1> ");
 		try{
 		while(rs.next())
 		{
-			owner=rs.getString(2);
-			prakashanaaddress=rs.getString(3);
-			out.println("<br>Prakashana Name: "+prakashananame);
-			out.println("<br>Prakashana Address: "+prakashanaaddress);
-			out.println("<br>Prakashana Owner: "+owner);
-			
+			prakashananame=rs.getNString(1);
+			out.println("<br>"+prakashananame);
+			link="DisplayPrakashanaDetails?param="+prakashananame;
+			out.println("<a href='"+ link +"'> View </a>");
 		}
+		out.println("</html>");
+		}catch(Exception e){
+			System.out.println("Exception called in ViewPrakashanaList.java:"+e.getMessage());
 		}
-		catch(Exception e){}
 	}
 
 	/**

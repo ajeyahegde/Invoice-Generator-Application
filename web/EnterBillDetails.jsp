@@ -1,16 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*,databaseClient.SqlClient" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>BILL DETAILS</title>
+<link href="<%=request.getContextPath()%>/ViewDesign.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <form action="SelectBooks.jsp" method="get">
-Select Prakashana 
+<a style="margin-left:90%;margin-top:10%;" href="Homepage.html">HOME</a>
+<h1>BILL DETAILS</h1>
+ಪ್ರಕಾಶನ ಹೆಸರನ್ನು ಆಯ್ಕೆ ಮಾಡಿ
 <%try{
 	SqlClient s=new SqlClient();
 	ResultSet rs=s.getPrakashanaTable();
@@ -37,9 +40,9 @@ Select Prakashana
 </select>
 <%} catch(Exception e){}
 %>
-<br>Enter Date<input type="text" name="date">
-<br>Enter Bill Number<input type="text" name="billno">
-<br>Select Customer<br>
+<br>ದಿನಾಂಕ [YYYY-MM-DD]:<input type="text" name="date" style="width:50%;">
+<br>ಬಿಲ್ ಸಂಖ್ಯೆ :<input type="text" name="billno" style="width:50%;">
+<br>ಗ್ರಾಹಕರ ಹೆಸರು ಆಯ್ಕೆ ಮಾಡಿ
 <%try{
 	SqlClient s=new SqlClient();
 	ResultSet rs=s.getCustomerTable();

@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="java.sql.*,databaseClient.SqlClient" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/formdesign1.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
+<a style="margin-left:90%;margin-top:10%;" href="Homepage.html">HOME</a>
 <%
 	int id;
 	id=Integer.parseInt(request.getParameter("id"));	
@@ -22,7 +24,7 @@
 	apan=request.getParameter("apan");
 	sql.UpdateAuthor(aname, aaddress, apan, amobile, aphone);
 	Thread.sleep(2000);
-	out.println("Author Details Updated");
+	out.println("<h1>Author Details Updated</h1>");
 	}
 	else if(id==2)
 	{
@@ -37,7 +39,7 @@
 		quantity=Integer.parseInt(request.getParameter("quantity"));
 		bno=Integer.parseInt(request.getParameter("bno"));
 		sql.UpdateBooks(bname, author, quantity, pname, price, pages, year, bno);
-		out.println("Book Details Updated");
+		out.println("<h1>Book Details Updated</h1>");
 	}
 	else if(id==3)
 	{
@@ -46,7 +48,7 @@
 		paddress=request.getParameter("paddress");
 		owner=request.getParameter("owner");
 		sql.UpdatePrakashana(pname, owner, paddress);
-		out.println("Prakashana Details Updated");
+		out.println("<h1>Prakashana Details Updated</h1>");
 	}
 	else if(id==4)
 	{
@@ -55,7 +57,7 @@
 		caddress=request.getParameter("customer");
 		cphone=request.getParameter("cphone");
 		sql.UpdateCustomer(cname, cphone, caddress);
-		out.println("Customer Details Updated");
+		out.println("<h1>Customer Details Updated</h1>");
 	}
 %>
 </body>

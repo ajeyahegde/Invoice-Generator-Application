@@ -32,17 +32,23 @@ public class EnterPrakashanaDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		SqlClient d=new SqlClient();
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		SqlClient sql=new SqlClient();
 		PrintWriter out=response.getWriter();
 		String prakashananame,owner,prakashanaaddress;
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
 		prakashananame=request.getParameter("pname");
 		owner=request.getParameter("owner");
 		prakashanaaddress=request.getParameter("paddress");
-		d.setPrakashanaDetails(prakashananame, owner, prakashanaaddress);
-		out.println("<br>You inserted prakashana detials as follows");
-		out.println("<br>Prakashana Name: "+prakashananame);
-		out.println("<br>Prakashana Address: "+prakashanaaddress);
-		out.println("<br>Prakashana Owner: "+owner);
+		out.println("<html><head><link rel='stylesheet' type='text/css' href='"+request.getContextPath()+"/ViewDesign.css'></head>");
+		sql.setPrakashanaDetails(prakashananame, owner, prakashanaaddress);
+		out.println("<br>ಸೇರಿಸಲಾಗಿದೆ ಪ್ರಕಾಶನ ವಿವರಗಳು");
+		out.println("<br>ಪ್ರಕಾಶನ ಹೆಸರು: "+prakashananame);
+		out.println("<br>ಪ್ರಕಾಶನ ವಿಳಾಸ: "+prakashanaaddress);
+		out.println("<br>ಪ್ರಕಾಶನ ಮಾಲೀಕರು: "+owner);
+		out.println("</html");
 	}
 
 	/**

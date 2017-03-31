@@ -35,22 +35,26 @@ public class EnterAuthorDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		out.println("This is author details page");
 		String authorname,authoraddress,authorphone,authormobile,authorpan;
 		authorname=request.getParameter("aname");
 		authoraddress=request.getParameter("aaddress");
 		authorphone=request.getParameter("aphone");
 		authormobile=request.getParameter("amobile");
 		authorpan=request.getParameter("apan");
-		SqlClient d=new SqlClient();
-		d.setAuthorDetails(authorname, authoraddress, authorphone, authormobile, authorpan);
-			out.println("<br>You inserted author detials as follows");
-			out.println("<br>Author name: "+authorname);
-			out.println("<br>Author address: "+authoraddress);
-			out.println("<br>Author phone: "+authorphone);
-			out.println("<br>Author mobile: "+authormobile);
-			out.println("<br>Author pancard no: "+authorpan);
+		SqlClient sql=new SqlClient();
+		out.println("<html><head><link rel='stylesheet' type='text/css' href='"+request.getContextPath()+"/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
+		sql.setAuthorDetails(authorname, authoraddress, authorphone, authormobile, authorpan);
+			out.println("<br>ಲೇಖಕರ ಹೆಸರು: "+authorname);
+			out.println("<br>ಲೇಖಕರ ವಿಳಾಸ : "+authoraddress);
+			out.println("<br>ಲೇಖಕರ ಫೋನ್ ನಂಬರ್ : "+authorphone);
+			out.println("<br>ಲೇಖಕರ ಮೊಬೈಲ್  ನಂಬರ್ : "+authormobile);
+			out.println("<br>ಲೇಖಕರ ಪಾನ್ ಕಾರ್ಡ್  ನಂಬರ್ : "+authorpan);
+			out.println("</html>");
 	}		
 
 	/**

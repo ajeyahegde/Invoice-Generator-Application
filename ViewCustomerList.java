@@ -1,8 +1,8 @@
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
+import java.io.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import databaseClient.SqlClient;
 
 /**
- * Servlet implementation class displaybookdetails
+ * Servlet implementation class viewcustomer
  */
-@WebServlet("/DisplayBookDetails")
-public class DisplayBookDetails extends HttpServlet {
+@WebServlet("/ViewCustomerList")
+public class ViewCustomerList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisplayBookDetails() {
+    public ViewCustomerList() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,32 +32,29 @@ public class DisplayBookDetails extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		String bookname=request.getParameter("param");
-		SqlClient d=new SqlClient();
-		ResultSet rs=d.getBookDetails(bookname);
-		String author,prakashananame;
-		int year,pages,quantity,price;
+		SqlClient sql=new SqlClient();
+		ResultSet rs=sql.getCustomerTable();
+		String customeraddress,link;
+		out.print("<html><head><link rel='stylesheet' type='text/css' href='/bills2/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
+		out.println("<h1>ಗ್ರಾಹಕರು</h1> ");
 		try{
 			while(rs.next())
 			{
-				author=rs.getString(2);
-				prakashananame=rs.getString(7);
-				price=rs.getInt(3);
-				pages=rs.getInt(5);
-				quantity=rs.getInt(4);
-				year=rs.getInt(6);
-				out.println("<br>Book Name: "+bookname);
-				out.println("<br>Author of the Book: "+author);
-				out.println("<br>Price of Book: "+price);
-				out.println("<br>Quantity Remaining: "+quantity);
-				out.println("<br>No of pages: "+pages);
-				out.println("<br>Year of Release: "+year);
-				out.println("<br>Prakashana Name: "+prakashananame);
+				customeraddress=rs.getNString(2);
+				out.println("<br>"+customeraddress);
+				link="DisplayCustomerDetails?param="+customeraddress;
+				out.println("<a href='"+ link +"'> View </a>");
 			}
+			out.println("</html");
+			}catch(Exception e)
+			{
+				System.out.println("Exception called in ViewCustomerList.java:"+e.getMessage());
 			}
-			catch(Exception e){}
-
 	}
 
 	/**

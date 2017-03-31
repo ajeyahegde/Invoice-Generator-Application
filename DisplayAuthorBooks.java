@@ -4,25 +4,26 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 
-import bills2.DatabaseAccess;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import databaseClient.SqlClient;
+import databaseClient.SqlClient.*;
+
 /**
- * Servlet implementation class viewprakashana
+ * Servlet implementation class authorbooks
  */
-@WebServlet("/viewprakashana")
-public class viewprakashana extends HttpServlet {
+@WebServlet("/DisplayAuthorBooks")
+public class DisplayAuthorBooks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public viewprakashana() {
+    public DisplayAuthorBooks() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +33,26 @@ public class viewprakashana extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
-		DatabaseAccess d=new DatabaseAccess();
-		ResultSet rs=d.getPrakashanaTable();
-		String pname,link;
+		String authorname=request.getParameter("param");
+		out.print("<html><head><link rel='stylesheet' type='text/css' href='"+request.getContextPath()+"/ViewDesign.css'></head>");
+		out.println("<a style='margin-left:90%;margin-top:10%;' href='Homepage.html'>HOME</a>");
+		out.println("<h1>"+authorname+"ರವರ ಪುಸ್ತಕಗಳು :</h1>");
+		SqlClient sql=new SqlClient();
 		try{
-		while(rs.next())
-		{
-			pname=rs.getString(1);
-			out.println("<br>"+pname);
-			link="displayprakashanadetails?param="+pname;
-			//out.println("<a href='author1?param='> View </a>");
-			out.println("<a href='"+ link +"'> View </a>");
+			ResultSet rs=sql.getAuthorBookList(authorname);
+			while(rs.next())
+			{
+				out.println("<br>"+rs.getNString(1));
+			}
+			out.println("</html>");
 		}
-		}catch(Exception e){
+		catch(Exception e)
+		{
+			System.out.println("Exception called in DisplayAuthorBooks.java:"+e.getMessage());
 		}
 	}
 
